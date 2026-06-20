@@ -1,5 +1,6 @@
 // WhatsApp Business destination in full international digits.
 const WHATSAPP_NUMBER='233555116596';
+const supportWidget=document.querySelector('#supportWidget');
 const supportLauncher=document.querySelector('#supportLauncher');
 const supportPanel=document.querySelector('#supportPanel');
 const supportClose=document.querySelector('#supportClose');
@@ -23,10 +24,12 @@ function updateWhatsApp(){const text=encodeURIComponent(`Hello Whosder Ghana Sta
 function addSupportMessage(text,type){const item=document.createElement('div');item.className=`support-message ${type}`;item.textContent=text;supportMessages.append(item);supportMessages.scrollTop=supportMessages.scrollHeight}
 function answerQuestion(question){const normalized=question.toLowerCase();const match=supportAnswers.find(item=>item.terms.some(term=>normalized.includes(term)));return match?.reply||'I may need a person to help with that. Continue on WhatsApp and your question will be included automatically.'}
 function sendQuestion(question){const clean=question.trim().slice(0,300);if(!clean)return;latestQuestion=clean;addSupportMessage(clean,'guest');updateWhatsApp();window.setTimeout(()=>addSupportMessage(answerQuestion(clean),'bot'),250)}
-function toggleSupport(open){supportPanel.classList.toggle('hidden',!open);supportLauncher.setAttribute('aria-expanded',String(open));if(open)supportInput.focus()}
+function toggleSupport(open){supportWidget.classList.toggle('is-open',open);supportPanel.classList.toggle('hidden',!open);supportLauncher.setAttribute('aria-expanded',String(open));supportLauncher.setAttribute('aria-label',open?'Close guest support chat':'Open guest support chat');if(open)supportInput.focus()}
 
 supportLauncher.addEventListener('click',()=>toggleSupport(supportPanel.classList.contains('hidden')));
 supportClose.addEventListener('click',()=>toggleSupport(false));
 supportForm.addEventListener('submit',event=>{event.preventDefault();sendQuestion(supportInput.value);supportInput.value=''});
 document.querySelectorAll('#supportPrompts button').forEach(button=>button.addEventListener('click',()=>sendQuestion(button.textContent)));
+document.addEventListener('keydown',event=>{if(event.key==='Escape'&&supportWidget.classList.contains('is-open'))toggleSupport(false)});
+document.addEventListener('click',event=>{if(supportWidget.classList.contains('is-open')&&!supportWidget.contains(event.target))toggleSupport(false)});
 updateWhatsApp();
