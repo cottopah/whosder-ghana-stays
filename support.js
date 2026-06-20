@@ -1,5 +1,5 @@
-// Add the full international business number (digits only) before production.
-const WHATSAPP_NUMBER='';
+// WhatsApp Business destination in full international digits.
+const WHATSAPP_NUMBER='233555116596';
 const supportLauncher=document.querySelector('#supportLauncher');
 const supportPanel=document.querySelector('#supportPanel');
 const supportClose=document.querySelector('#supportClose');
