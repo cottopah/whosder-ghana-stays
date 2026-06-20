@@ -1,0 +1,15 @@
+{
+  "name": "whosder-ghana-stays",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Whosder Ghana Stays guest booking site and live support bridge",
+  "scripts": {
+    "check": "node --check app.js && node --check support.js && node --check api/chat/session.js && node --test"
+  },
+  "dependencies": {
+    "twilio": "6.0.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
