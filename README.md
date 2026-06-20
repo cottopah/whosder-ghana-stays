@@ -21,7 +21,7 @@ Then visit `http://localhost:8080`.
 - `.ics`, Google Calendar, and Outlook calendar options for confirmed bookings
 - Remembered Light and Dark guest themes
 - Remembered GHS, USD, EUR, and GBP display currencies with a backend exchange-rate API contract
-- Guest support chatbot with safety guidance and a WhatsApp handoff
+- Guest support chatbot with silent escalation to a Twilio Conversations/WhatsApp host
 - Persistent prototype data using `localStorage`
 - Architecture and data-flow drawing in `architecture.svg`
 
@@ -33,4 +33,19 @@ The owner page is physically separated from the guest page and is not linked pub
 
 For live display conversion, the guest app expects `GET /api/exchange-rates` to return USD-based rates such as `{ "rates": { "USD": 1, "GHS": 12.5, "EUR": 0.86, "GBP": 0.74 } }`. Fetch rates server-side from a dedicated FX-data provider, cache them with a timestamp, and never expose the provider key in browser code. Display rates are estimates; the payment provider's checkout quote is authoritative.
 
-Set `WHATSAPP_NUMBER` in `support.js` to the business number in full international digits without `+`, spaces, or punctuation. Until configured, the WhatsApp button opens a contact-selection handoff with the guest's latest question prefilled. The bundled chatbot is a fast FAQ assistant, not a generative AI service; production AI should run behind a rate-limited backend with moderation, logging controls, and no access to payment credentials.
+The bundled chatbot answers known FAQs locally. Questions it cannot answer are silently escalated through Twilio Conversations: the guest remains in the website chat, the host receives the message in WhatsApp, and the host's reply is streamed back into the same browser conversation. The public client receives only a short-lived Conversations access token; Twilio credentials and the signed conversation session remain server-side.
+
+## Deploy live support on Vercel
+
+GitHub Pages cannot run the `/api/chat/session` backend. Import this repository into Vercel and deploy it as a Node.js 20 project, then configure every variable from `.env.example` in Vercel's encrypted environment settings:
+
+1. Create a Twilio Conversations Service and copy its `IS...` SID.
+2. Create a restricted Twilio API key for browser access tokens; keep the API secret and Auth Token only in Vercel.
+3. Configure a Twilio WhatsApp sender. For Sandbox testing, `233555116596` must join the Sandbox first.
+4. Set `SUPPORT_WHATSAPP_NUMBER=whatsapp:+233555116596` and set `TWILIO_WHATSAPP_NUMBER` to the Twilio Sandbox or approved sender.
+5. Generate a random `CHAT_SESSION_SECRET` of at least 32 characters.
+6. Deploy, then test an unknown question in the web chat and reply from the enrolled WhatsApp account.
+
+WhatsApp restricts business-initiated messages outside its customer-service window. Sandbox enrollment is sufficient for development; production may require an approved WhatsApp template to start the host notification. Confirm that workflow with Twilio during sender onboarding. The endpoint applies best-effort per-instance throttling; enable Vercel Firewall or a shared rate-limit store before public launch.
+
+The assistant is deliberately not a generative AI service. Any later AI integration should run behind moderation and logging controls and must never receive payment credentials, passwords, PINs, or MoMo verification codes.
