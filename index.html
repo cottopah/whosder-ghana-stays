@@ -11,6 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="security.css">
+  <link rel="stylesheet" href="support.css">
 </head>
 <body>
   <header class="site-header">
@@ -62,7 +63,19 @@
     </section>
   </div>
   <div class="toast" id="toast"></div>
+  <aside class="support-widget" id="supportWidget" aria-label="Guest support">
+    <button class="support-launcher" id="supportLauncher" type="button" aria-expanded="false" aria-controls="supportPanel"><span aria-hidden="true">?</span><span>Ask us</span></button>
+    <section class="support-panel hidden" id="supportPanel" aria-live="polite">
+      <header class="support-header"><div><strong>Whosder Assistant</strong><small><i></i> Instant guest support</small></div><button id="supportClose" type="button" aria-label="Close support chat">&times;</button></header>
+      <div class="support-messages" id="supportMessages"><div class="support-message bot">Hi! I can help with availability, payments, check-in, cancellations, and amenities. What would you like to know?</div></div>
+      <div class="support-prompts" id="supportPrompts"><button type="button">Is this property available?</button><button type="button">How can I pay?</button><button type="button">What is check-in time?</button></div>
+      <form class="support-form" id="supportForm"><label class="sr-only" for="supportInput">Ask a question</label><input id="supportInput" maxlength="300" autocomplete="off" placeholder="Type your question..." required><button type="submit" aria-label="Send question">Send</button></form>
+      <p class="support-safety">Never share card numbers, PINs, passwords, or MoMo verification codes in chat.</p>
+      <a class="whatsapp-button" id="whatsappLink" href="https://wa.me/" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">WA</span> Continue on WhatsApp</a>
+    </section>
+  </aside>
   <footer><a class="brand inverse" href="#"><span class="brand-mark">W</span><span>Whosder Ghana<br><b>STAYS</b></span></a><p>Curated short stays in Accra, Ghana.</p><span>© 2026 Whosder Ghana Stays</span></footer>
   <script src="app.js"></script>
+  <script src="support.js"></script>
 </body>
 </html>
