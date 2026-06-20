@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Curated short-stay homes in Accra, Ghana.">
+  <title>Whosder Ghana Stays | Accra</title>
+  <script>document.documentElement.dataset.theme=localStorage.getItem('akwaaba-theme')==='dark'?'dark':'light'</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="security.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#" data-route="home"><span class="brand-mark">W</span><span>Whosder Ghana<br><b>STAYS</b></span></a>
+    <nav aria-label="Main navigation">
+      <button class="nav-link active" data-route="home">Discover</button>
+      <button class="nav-link" data-route="bookings">My stays</button>
+    </nav>
+    <div class="header-actions"><label class="currency-picker" title="Choose display currency"><span>Currency</span><select id="currencySelect" aria-label="Display currency"><option value="GHS">GHS</option><option value="USD">USD</option><option value="EUR">EUR</option><option value="GBP">GBP</option></select></label><button class="theme-toggle" id="themeToggle" type="button" aria-label="Change color theme" title="Change color theme"><span class="theme-icon" aria-hidden="true">◐</span><span id="themeLabel">Light</span></button><button class="account-button" id="accountButton"><span class="avatar">CG</span><span class="account-copy">Hello, guest<small>Sign in or create account</small></span></button></div>
+  </header>
+
+  <main>
+    <section id="homeView">
+      <div class="hero">
+        <div class="hero-image" role="img" aria-label="Modern Accra home"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <span class="eyebrow light">HANDPICKED HOMES · ACCRA, GHANA</span>
+          <h1>Stay somewhere<br>worth remembering.</h1>
+          <p>Beautifully considered homes, local care, and an easier way to experience Accra.</p>
+        </div>
+        <form class="search-bar" id="searchForm">
+          <label>WHERE<span><i class="pin">●</i><select id="areaFilter"><option value="">All Accra neighborhoods</option><option>Airport Residential</option><option>Cantonments</option><option>East Legon</option></select></span></label>
+          <label>CHECK IN<span><input type="date" id="globalCheckIn"></span></label>
+          <label>CHECK OUT<span><input type="date" id="globalCheckOut"></span></label>
+          <label>GUESTS<span><select id="guestFilter"><option value="1">1 guest</option><option value="2">2 guests</option><option value="4">3–4 guests</option><option value="6">5–6 guests</option></select></span></label>
+          <button class="search-button" type="submit">Search stays <span>→</span></button>
+        </form>
+      </div>
+
+      <section class="content-section">
+        <div class="section-heading"><div><span class="eyebrow">YOUR ACCRA ADDRESS</span><h2>Homes with a sense of place</h2></div><p id="resultCount"></p></div>
+        <div class="property-grid" id="propertyGrid"></div>
+      </section>
+
+      <section class="promise-section">
+        <span class="eyebrow light">THE WHOSDER GHANA PROMISE</span><h2>Thoughtful stays,<br>from arrival to goodbye.</h2>
+        <div class="promise-grid"><article><b>01</b><h3>Personally managed</h3><p>One local team, every home, every detail.</p></article><article><b>02</b><h3>Secure payments</h3><p>Card and mobile money via trusted providers.</p></article><article><b>03</b><h3>Here when you need us</h3><p>Responsive guest support throughout your stay.</p></article></div>
+      </section>
+    </section>
+
+    <section class="page-view hidden" id="bookingsView"><div class="page-title"><span class="eyebrow">YOUR JOURNEYS</span><h1>My stays</h1><p>Upcoming and past reservations appear here.</p></div><div id="bookingList" class="booking-list"></div></section>
+
+  </main>
+
+  <div class="modal-backdrop hidden" id="modalBackdrop">
+    <section class="modal" id="propertyModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" data-close>×</button><div id="modalContent"></div>
+    </section>
+  </div>
+  <div class="toast" id="toast"></div>
+  <footer><a class="brand inverse" href="#"><span class="brand-mark">W</span><span>Whosder Ghana<br><b>STAYS</b></span></a><p>Curated short stays in Accra, Ghana.</p><span>© 2026 Whosder Ghana Stays</span></footer>
+  <script src="app.js"></script>
+</body>
+</html>
